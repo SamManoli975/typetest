@@ -1,17 +1,14 @@
 // import logo from './logo.svg';
 import React from 'react';
 import './App.css';
+import Hello from './sayHello';
 
 function App() {
 
-  const sayhello = () =>{
-    console.log('sayHello');
-  }
+  
   return (
     <div>
-      <h1>hello</h1>
-      <h2>h2</h2>
-      <button onClick={sayhello}>hello</button>
+      <Hello/>
     </div>
   );
 }
