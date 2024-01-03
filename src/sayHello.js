@@ -15,8 +15,16 @@ function Hello(){
     };
     return(
         <div>
-            <button onClick={RandomWords}>click to generate new words</button>
-            <h1>{words}</h1>
+            
+            <div>
+                
+                <textarea className='textBox' placeholder={words}></textarea>
+            </div>
+            <div className="newWordsButton">
+                <button onClick={RandomWords}>click to generate new words</button>
+            </div>
+            
+                
         </div>
     );
 }

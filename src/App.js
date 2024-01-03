@@ -7,7 +7,7 @@ function App() {
 
   
   return (
-    <div className='textBox'>
+    <div>
       <Hello/>
     </div>
   );

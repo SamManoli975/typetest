@@ -38,6 +38,15 @@
 }
 
 .textBox{
-  background-color: rgb(31, 24, 24);
+  color: rgb(31, 24, 24);
   font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  position: absolute;
+  top: 40vh;
+  width: 100vw;
+  height: 30vh;
+}
+.newWordsButton{
+  /* bottom: 10vh; */
+  /* position: absolute; */
 }
