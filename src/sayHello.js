@@ -5,6 +5,7 @@ import {generate} from "random-words";//importing
 //function to create new words
 function Hello(){
     const [words, setWords] = useState(""); // State for storing words
+    const [userInput, setUserInput] = useState("");
 
     const RandomWords = () => {
         // Generate an array of 5 random words
@@ -17,8 +18,11 @@ function Hello(){
         <div>
             
             <div>
-                
-                <textarea className='textBox' placeholder={words}></textarea>
+                <p >{words}</p>
+                <input 
+                    type="text"
+                    value = {userInput}
+                    onChange={(e) => setUserInput(e.target.value)}/>
             </div>
             <div className="newWordsButton">
                 <button onClick={RandomWords}>click to generate new words</button>
