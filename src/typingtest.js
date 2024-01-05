@@ -8,7 +8,9 @@ function App(){
     const [userInput, setUserInput] = useState("");
     const [activeWordIndex,setActiveWordIndex] = useState(0);
 
-    
+    const reset = () => {
+        setActiveWordIndex(0)
+    }
     function processInput(value){
         if(value.endsWith(' ')){
             setActiveWordIndex(index => index+1)
@@ -43,7 +45,7 @@ function App(){
                     onChange={(e) => processInput(e.target.value)}/>
             </div>
             <div className="newWordsButton">
-                <button className='generateButton' onClick={() => { RandomWords()}}>
+                <button className='generateButton' onClick={() => { RandomWords(); reset();}}>
                     click to generate new words
                 </button>
             </div>
