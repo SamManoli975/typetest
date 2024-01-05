@@ -1,16 +1,16 @@
 // import logo from './logo.svg';
 import React from 'react';
 import './App.css';
-import Hello from './sayHello';
+import App from './typingtest';
 
-function App() {
+function Game() {
 
   
   return (
     <div className='textBox'>
-      <Hello/>
+      <App/>
     </div>
   );
 }
 
-export default App;
+export default Game;

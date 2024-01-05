@@ -51,7 +51,16 @@
   box-sizing: border-box;
 
 }
-.newWordsButton{
-  /* bottom: 10vh; */
-  /* position: absolute; */
+.generateButton{
+  font-size: 40px;
+  border-radius: 20px;
+  margin: 20px;
+}
+.inputBox{
+  width: 50vw;
+  height: 10vh;
+  font-size: 40px;
+}
+.bold{
+  color: black;
 }
