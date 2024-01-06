@@ -8,9 +8,11 @@ function App(){
     const [userInput, setUserInput] = useState("");
     const [activeWordIndex,setActiveWordIndex] = useState(0);
 
+    //function to reset index
     const reset = () => {
         setActiveWordIndex(0)
     }
+    //function to increment index after space bar pressed
     function processInput(value){
         if(value.endsWith(' ')){
             setActiveWordIndex(index => index+1)
@@ -19,6 +21,7 @@ function App(){
             setUserInput(value)
         }
     }
+    //function to create random words
     const RandomWords = () => {
         // Generate an array of 5 random words
         const generatedWords = generate({ exactly: 29, join: " " });
@@ -26,7 +29,7 @@ function App(){
         // Update the state with the generated words
         setWords(generatedWords);
     };
-    return(
+    return(//return 
         <div>
             
             <div>
