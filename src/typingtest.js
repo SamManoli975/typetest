@@ -7,6 +7,7 @@ function App() {
     const [words, setWords] = useState("");
     const [userInput, setUserInput] = useState("");
     const [activeWordIndex, setActiveWordIndex] = useState(0);
+    const [letterColor , setLetterColor] = useState("gray");
 
     //reset function to reset the index
     const reset = () => {
@@ -34,10 +35,18 @@ function App() {
         const enteredWord = userInput.trim();
 
         if (enteredWord === currentWord) {//check if the word is the current word
-
-            setActiveWordIndex((index) => index + 1);
-            setUserInput("");
+            console.log('correct word');
+            setLetterColor('green');
+        }else{
+            console.log('incorrect word');
+            setLetterColor('red');        
         }
+
+        setActiveWordIndex((index) => index + 1);
+        setUserInput("");
+        
+
+        
     };
 
     //function to get random array of words
@@ -49,14 +58,16 @@ function App() {
 
     //to check if the letter is correct
     const isCorrectLetter = (wordIndex, letterIndex) => {
+    if (wordIndex === activeWordIndex) {
+        const currentWord = words.split(" ")[wordIndex].trim();
+        return (
+            letterIndex < currentWord.length &&
+            userInput[letterIndex] === currentWord[letterIndex]
+        );
+    }
+    return false;
+};
 
-        if (wordIndex === activeWordIndex) {//check the the word is the active word
-
-            const currentWord = words.split(" ")[wordIndex].trim();
-            return userInput[letterIndex] === currentWord[letterIndex];
-        }
-        return false;
-    };
 
     return (//return
         <div>
@@ -70,8 +81,8 @@ function App() {
                     <span
                         key={letterIndex}
                         style={{
-                        color: "gray",
-                        color: isCorrectLetter(index, letterIndex) ? 'green' : 'red',//call the letter function
+                        // color: "gray",
+                        color: letterColor,//call the letter function
 
                         }}
                     >

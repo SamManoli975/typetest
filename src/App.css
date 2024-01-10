@@ -60,6 +60,7 @@
   width: 50vw;
   height: 10vh;
   font-size: 40px;
+  border-radius: 10px;
 }
 .bold{
   color: black;
