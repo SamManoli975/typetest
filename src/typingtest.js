@@ -7,6 +7,43 @@ function App() {
     const [activeWordIndex, setActiveWordIndex] = useState(0);
     const [letterColors, setLetterColors] = useState([]);
 
+
+    const CountdownTimer = ({ initialSeconds }) => {
+        const [seconds, setSeconds] = useState(initialSeconds);
+        
+        useEffect(() => {
+            // Exit early if countdown is finished
+            if (seconds <= 0) {
+                return;
+            }
+            
+            // Set up the timer
+            const timer = setInterval(() => {
+                setSeconds((prevSeconds) => prevSeconds - 1);
+            }, 1000);
+            
+            // Clean up the timer
+            return () => clearInterval(timer);
+        }, [seconds]);
+        
+        // Format the remaining time (e.g., “00:05:10” for 5 minutes and 10 seconds)
+            const formatTime = (timeInSeconds) => {
+            const minutes = Math.floor(timeInSeconds / 60)
+            .toString()
+            .padStart(2, '0');
+            const seconds = (timeInSeconds % 60).toString().padStart(2, '0');
+        return `${minutes}:${seconds}`;
+        };
+        
+        return (
+            <div>
+                <h1>Countdown Timer</h1>
+                <p>{formatTime(seconds)}</p>
+            </div>
+        );
+    };
+
+
     const reset = () => {
         setActiveWordIndex(0);
         setUserInput("");
@@ -129,9 +166,13 @@ function App() {
                 >
                     Click to generate new words
                 </button>
+                <CountdownTimer initialSeconds={300} />
             </div>
         </div>
     );
+    
 }
 
 export default App;
+
+
