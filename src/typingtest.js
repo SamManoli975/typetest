@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { generate } from "random-words";
+import CountdownTimer from "./timer";
 
 function App() {
     const [words, setWords] = useState("");
@@ -8,40 +9,7 @@ function App() {
     const [letterColors, setLetterColors] = useState([]);
 
 
-    const CountdownTimer = ({ initialSeconds }) => {
-        const [seconds, setSeconds] = useState(initialSeconds);
-        
-        useEffect(() => {
-            // Exit early if countdown is finished
-            if (seconds <= 0) {
-                return;
-            }
-            
-            // Set up the timer
-            const timer = setInterval(() => {
-                setSeconds((prevSeconds) => prevSeconds - 1);
-            }, 1000);
-            
-            // Clean up the timer
-            return () => clearInterval(timer);
-        }, [seconds]);
-        
-        // Format the remaining time (e.g., “00:05:10” for 5 minutes and 10 seconds)
-            const formatTime = (timeInSeconds) => {
-            const minutes = Math.floor(timeInSeconds / 60)
-            .toString()
-            .padStart(2, '0');
-            const seconds = (timeInSeconds % 60).toString().padStart(2, '0');
-        return `${minutes}:${seconds}`;
-        };
-        
-        return (
-            <div>
-                <h1>Countdown Timer</h1>
-                <p>{formatTime(seconds)}</p>
-            </div>
-        );
-    };
+    
 
 
     const reset = () => {
@@ -124,6 +92,7 @@ function App() {
 
     return (
         <div>
+            <CountdownTimer initialSeconds = {300}/>
             <div>
                 <p>
                     {words.split(" ").map((word, index) => (
@@ -166,9 +135,11 @@ function App() {
                 >
                     Click to generate new words
                 </button>
-                <CountdownTimer initialSeconds={300} />
+                
             </div>
+            
         </div>
+        
     );
     
 }
