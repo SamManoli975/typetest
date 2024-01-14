@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 
-const CountdownTimer = ({ initialSeconds }) => {
+const CountdownTimer = ({ initialSeconds, startCountdown }) => {
     const [seconds, setSeconds] = useState(initialSeconds);
-
+    // if (startCountdown == false){
+    //     setSeconds(initialSeconds);
+    // }
     useEffect(() => {
-        // Exit early if countdown is finished
-        if (seconds <= 0) {
+        // Exit early if countdown is finished or not started
+        if (seconds <= 0 || !startCountdown) {
             return;
         }
 
@@ -16,9 +18,9 @@ const CountdownTimer = ({ initialSeconds }) => {
 
         // Clean up the timer
         return () => clearInterval(timer);
-    }, [seconds]);
+    }, [seconds, startCountdown]);
 
-    // Format the remaining time (e.g., “00:05:10” for 5 minutes and 10 seconds)
+    // Format the remaining time
     const formatTime = (timeInSeconds) => {
         const minutes = Math.floor(timeInSeconds / 60).toString().padStart(2, '0');
         const remainingSeconds = (timeInSeconds % 60).toString().padStart(2, '0');

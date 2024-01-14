@@ -7,6 +7,7 @@ function App() {
     const [userInput, setUserInput] = useState("");
     const [activeWordIndex, setActiveWordIndex] = useState(0);
     const [letterColors, setLetterColors] = useState([]);
+    const [startCountdown, setStartCountdown] = useState(false);
 
 
     
@@ -15,17 +16,19 @@ function App() {
     const reset = () => {
         setActiveWordIndex(0);
         setUserInput("");
+        setStartCountdown(false);
     };
 
-    const processInput = (value,e) => {
+    const processInput = (value, e) => {
         if (value.endsWith(" ")) {
             checkWord();
-        }else if (e.key === "Backspace"){
+        } else if (e.key === "Backspace") {
             console.log("Backspace pressed");
-        
+            // Handle Backspace key
         } else {
             setUserInput(value);
             updateLetterColors(); // Update letter colors immediately after each user input
+            setStartCountdown(true);
         }
     };
 
@@ -92,7 +95,7 @@ function App() {
 
     return (
         <div>
-            <CountdownTimer initialSeconds = {300}/>
+            <CountdownTimer initialSeconds = {30} startCountdown={startCountdown}/>
             <div>
                 <p>
                     {words.split(" ").map((word, index) => (
@@ -129,8 +132,10 @@ function App() {
                 <button
                     className="generateButton"
                     onClick={() => {
+
                         RandomWords();
                         reset();
+                        < CountdownTimer initialSeconds={30} startCountdown={false}/>
                     }}
                 >
                     Click to generate new words
