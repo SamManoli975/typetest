@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 
 const CountdownTimer = ({ initialSeconds, startCountdown }) => {
     const [seconds, setSeconds] = useState(initialSeconds);
-    // if (startCountdown == false){
-    //     setSeconds(initialSeconds);
-    // }
+    
     useEffect(() => {
+        if (startCountdown == false){
+            setSeconds(initialSeconds);
+        }
         // Exit early if countdown is finished or not started
         if (seconds <= 0 || !startCountdown) {
             return;
