@@ -30,7 +30,7 @@ const CountdownTimer = ({ initialSeconds, startCountdown }) => {
 
     return (
         <div>
-            <h1>Countdown Timer</h1>
+            {/* <h1>Countdown Timer</h1> */}
             <p>{formatTime(seconds)}</p>
         </div>
     );

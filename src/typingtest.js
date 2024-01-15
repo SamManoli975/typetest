@@ -22,7 +22,7 @@ function App() {
     const processInput = (value, e) => {
         if (value.endsWith(" ")) {
             checkWord();
-        } else if (e.key === "Backspace") {
+        } else if (value.endsWith("08")) {
             console.log("Backspace pressed");
             // Handle Backspace key
         } else {
