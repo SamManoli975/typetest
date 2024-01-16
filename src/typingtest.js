@@ -8,7 +8,7 @@ function App() {
     const [activeWordIndex, setActiveWordIndex] = useState(0);
     const [letterColors, setLetterColors] = useState([]);
     const [startCountdown, setStartCountdown] = useState(false);
-
+    const [typedEntries, setTypedEntries] = useState(0);
 
     
 
@@ -26,6 +26,7 @@ function App() {
             console.log("Backspace pressed");
             // Handle Backspace key
         } else {
+            setTypedEntries((typedEntries) => typedEntries + 1);
             setUserInput(value);
             updateLetterColors(); // Update letter colors immediately after each user input
             setStartCountdown(true);
@@ -96,6 +97,7 @@ function App() {
     return (
         <div>
             <CountdownTimer initialSeconds = {30} startCountdown={startCountdown}/>
+            <p>{typedEntries/5/.5}</p>
             <div>
                 <p>
                     {words.split(" ").map((word, index) => (
@@ -132,7 +134,7 @@ function App() {
                 <button
                     className="generateButton"
                     onClick={() => {
-
+                        setTypedEntries(0);
                         RandomWords();
                         reset();
                         < CountdownTimer initialSeconds={30} startCountdown={false}/>
