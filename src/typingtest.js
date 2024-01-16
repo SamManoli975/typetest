@@ -9,27 +9,44 @@ function App() {
     const [letterColors, setLetterColors] = useState([]);
     const [startCountdown, setStartCountdown] = useState(false);
     const [typedEntries, setTypedEntries] = useState(0);
+    const [elapsedTime, setElapsedTime] = useState(0);
+    const [startTime, setStartTime] = useState(null);
 
     
 
 
     const reset = () => {
+        setElapsedTime(0);
+        setStartTime(null);
         setActiveWordIndex(0);
         setUserInput("");
         setStartCountdown(false);
     };
 
     const processInput = (value, e) => {
+        if (activeWordIndex === words.split(" ").length - 1) {
+            // If the activeWordIndex is the last word index, disable further input
+            return;
+        }
         if (value.endsWith(" ")) {
             checkWord();
+            // if (activeWordIndex === 29-1){
+            //     reset();
+            //     RandomWords();
+                
+            // }
         } else if (value.endsWith("08")) {
             console.log("Backspace pressed");
             // Handle Backspace key
         } else {
+            
             setTypedEntries((typedEntries) => typedEntries + 1);
             setUserInput(value);
             updateLetterColors(); // Update letter colors immediately after each user input
             setStartCountdown(true);
+        }
+        if (!startTime) {
+            setStartTime(new Date()); // Record start time on the first input
         }
     };
 
@@ -75,7 +92,13 @@ function App() {
 
     useEffect(() => {
         updateLetterColors();
-    }, [activeWordIndex, userInput]);
+        if (startTime) {
+            const now = new Date();
+            const elapsedMilliseconds = now - startTime;
+            const elapsedSeconds = Math.floor(elapsedMilliseconds / 1000);
+            setElapsedTime(elapsedSeconds);
+        }
+    }, [activeWordIndex, userInput,startTime]);
 
     const updateLetterColors = () => {
         const newColors = [...letterColors];
@@ -97,7 +120,10 @@ function App() {
     return (
         <div>
             <CountdownTimer initialSeconds = {30} startCountdown={startCountdown}/>
-            <p>{typedEntries/5/.5}</p>
+            <p>WPM: {typedEntries / 5 / (elapsedTime || 1) * 60}</p>
+            <p>TYPED ENTRIES: {typedEntries}</p>
+            <p>ELAPSED TIME: {elapsedTime||1}</p>
+            <p>DATE: {Date()}</p>
             <div>
                 <p>
                     {words.split(" ").map((word, index) => (
