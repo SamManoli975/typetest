@@ -1,21 +1,27 @@
+//importing
+
 import React, { useState, useEffect } from "react";
 import { generate } from "random-words";
 import CountdownTimer from "./timer";
 
+
+//main function
 function App() {
-    const [words, setWords] = useState("");
-    const [userInput, setUserInput] = useState("");
-    const [activeWordIndex, setActiveWordIndex] = useState(0);
-    const [letterColors, setLetterColors] = useState([]);
-    const [startCountdown, setStartCountdown] = useState(false);
-    const [typedEntries, setTypedEntries] = useState(0);
-    const [elapsedTime, setElapsedTime] = useState(0);
-    const [startTime, setStartTime] = useState(null);
+    //variables
+    const [words, setWords] = useState("");//words
+    const [userInput, setUserInput] = useState("");//the user input
+    const [activeWordIndex, setActiveWordIndex] = useState(0);//the index of the word
+    const [letterColors, setLetterColors] = useState([]);//the color of the letters
+    const [startCountdown, setStartCountdown] = useState(false);//the boolean to start the countdown
+    const [typedEntries, setTypedEntries] = useState(0);//how many letters the user types
+    const [elapsedTime, setElapsedTime] = useState(0);//time since the user started typing
+    const [startTime, setStartTime] = useState(null);//current time marked when the user hits start
 
     
 
-
+    //reset function
     const reset = () => {
+        //reseting the functions neccessary for the typing test
         setElapsedTime(0);
         setStartTime(null);
         setActiveWordIndex(0);
@@ -23,12 +29,15 @@ function App() {
         setStartCountdown(false);
     };
 
+    //processing the users input function
     const processInput = (value, e) => {
-        if (activeWordIndex === words.split(" ").length - 1) {
+        //when the index hits the limir
+        if (activeWordIndex === words.split(" ").length -1 ) {
             // If the activeWordIndex is the last word index, disable further input
             return;
         }
-        if (value.endsWith(" ")) {
+        
+        if (value.endsWith(" ")) {//if user enters space
             checkWord();
             // if (activeWordIndex === 29-1){
             //     reset();
@@ -40,18 +49,20 @@ function App() {
             // Handle Backspace key
         } else {
             
-            setTypedEntries((typedEntries) => typedEntries + 1);
+            setTypedEntries((typedEntries) => typedEntries + 1);//increment typedEntries
             setUserInput(value);
             updateLetterColors(); // Update letter colors immediately after each user input
             setStartCountdown(true);
         }
         if (!startTime) {
+
             setStartTime(new Date()); // Record start time on the first input
         }
     };
 
+    //function check if the letter is correct
     const checkWord = () => {
-        const currentWord = words.split(" ")[activeWordIndex].trim();
+        const currentWord = words.split(" ")[activeWordIndex].trim();//splitting the words and getting the current word
         const enteredWord = userInput.trim();
 
         const newColors = [...letterColors];
@@ -71,6 +82,7 @@ function App() {
         updateLetterColors(); // Update letter colors after checking the word
     };
 
+    //generating random words function
     const RandomWords = () => {
         const generatedWords = generate({ exactly: 29, join: " " });
         const initialColors = generatedWords.split(" ").map(() => []);
@@ -79,6 +91,7 @@ function App() {
         setActiveWordIndex(0); // Reset activeWordIndex when generating new words
     };
 
+    //check if the letter is correct
     const isCorrectLetter = (wordIndex, letterIndex) => {
         if (wordIndex === activeWordIndex) {
             const currentWord = words.split(" ")[wordIndex].trim();
@@ -90,6 +103,7 @@ function App() {
         return false;
     };
 
+    //useEffect function
     useEffect(() => {
         updateLetterColors();
         if (startTime) {
@@ -100,6 +114,7 @@ function App() {
         }
     }, [activeWordIndex, userInput,startTime]);
 
+    //function to change the letter colors
     const updateLetterColors = () => {
         const newColors = [...letterColors];
         if (!newColors[activeWordIndex]) {
@@ -117,8 +132,10 @@ function App() {
         setLetterColors(newColors);
     };
 
+    //return the component
     return (
         <div>
+            {/* Displaying the countdown timer */}
             <CountdownTimer initialSeconds = {30} startCountdown={startCountdown}/>
             <p>WPM: {typedEntries / 5 / (elapsedTime || 1) * 60}</p>
             <p>TYPED ENTRIES: {typedEntries}</p>
@@ -149,7 +166,8 @@ function App() {
                         </span>
                     ))}
                 </p>
-                <input
+                {/* input of the user */}
+                <input 
                     className="inputBox"
                     type="text"
                     value={userInput}
@@ -176,7 +194,7 @@ function App() {
     );
     
 }
-
+//exporting
 export default App;
 
 
