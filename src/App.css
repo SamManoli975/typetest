@@ -43,7 +43,7 @@
   font-size: 30px;
   text-align: center;
   position: absolute;
-  top: 20vh;
+  top: 5vh;
   width: 100vw;
   height: 30vh;
   /* margin: 20px; */
@@ -64,4 +64,22 @@
 }
 .bold{
   color: black;
+}
+
+.timerButton {
+  /* display: inline; */
+  align-items: center;
+}
+
+
+.timerButton button{
+  color: grey;
+  background-color: black;
+  font-size: 20px;
+  border-radius: 20px;
+  height: 10vh;
+  width: 20vw;
+  box-shadow: none;
+  margin: 0;
+
 }

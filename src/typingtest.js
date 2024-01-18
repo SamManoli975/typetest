@@ -16,7 +16,8 @@ function App() {
     const [typedEntries, setTypedEntries] = useState(0);//how many letters the user types
     const [elapsedTime, setElapsedTime] = useState(0);//time since the user started typing
     const [startTime, setStartTime] = useState(null);//current time marked when the user hits start
-
+    const [seconds , setSeconds] = useState(30);//seconds for the countdown timer
+    const [wordsPerMinute, setWordsPerMinute] = useState(0);//words per minute
     
 
     //reset function
@@ -31,6 +32,20 @@ function App() {
 
     //processing the users input function
     const processInput = (value, e) => {
+
+        setWordsPerMinute(parseFloat((typedEntries / 5 / (elapsedTime || 1) * 60).toFixed(1)));
+        // console.log(words.split(" ").length -1);
+        if (elapsedTime >= seconds) {
+            setUserInput("");
+            return;
+        }
+
+        if (e.key === "Backspace" && activeWordIndex > 0) {
+            setActiveWordIndex((index) => index - 1);
+            setUserInput("");
+            return;
+        }
+
         //when the index hits the limir
         if (activeWordIndex === words.split(" ").length -1 ) {
             // If the activeWordIndex is the last word index, disable further input
@@ -44,10 +59,7 @@ function App() {
             //     RandomWords();
                 
             // }
-        } else if (value.endsWith("08")) {
-            console.log("Backspace pressed");
-            // Handle Backspace key
-        } else {
+        }  else {
             
             setTypedEntries((typedEntries) => typedEntries + 1);//increment typedEntries
             setUserInput(value);
@@ -84,12 +96,19 @@ function App() {
 
     //generating random words function
     const RandomWords = () => {
-        const generatedWords = generate({ exactly: 29, join: " " });
+        const generatedWords = generate({ exactly: 50, join: " " });
         const initialColors = generatedWords.split(" ").map(() => []);
         setLetterColors(initialColors);
         setWords(generatedWords);
         setActiveWordIndex(0); // Reset activeWordIndex when generating new words
     };
+
+
+    const handleTimer = (seconds) => {
+        setSeconds(seconds);
+        setStartCountdown(true);
+    }
+
 
     //check if the letter is correct
     const isCorrectLetter = (wordIndex, letterIndex) => {
@@ -136,11 +155,18 @@ function App() {
     return (
         <div>
             {/* Displaying the countdown timer */}
-            <CountdownTimer initialSeconds = {30} startCountdown={startCountdown}/>
-            <p>WPM: {typedEntries / 5 / (elapsedTime || 1) * 60}</p>
-            <p>TYPED ENTRIES: {typedEntries}</p>
+            <p className="timerButton">
+                TIMER:
+                <button onClick={() => handleTimer(15)}>15 seconds</button>
+                <button onClick={() => handleTimer(30)}>30 seconds</button>
+                <button onClick={() => handleTimer(60)}>60 seconds</button>
+            </p>
+            <CountdownTimer initialSeconds = {seconds} startCountdown={startCountdown}/>
+            
+            <p>WPM: {wordsPerMinute}</p>
+            {/* <p>TYPED ENTRIES: {typedEntries}</p>
             <p>ELAPSED TIME: {elapsedTime||1}</p>
-            <p>DATE: {Date()}</p>
+            <p>DATE: {Date()}</p> */}
             <div>
                 <p>
                     {words.split(" ").map((word, index) => (
@@ -181,7 +207,7 @@ function App() {
                         setTypedEntries(0);
                         RandomWords();
                         reset();
-                        < CountdownTimer initialSeconds={30} startCountdown={false}/>
+                        < CountdownTimer initialSeconds={seconds} startCountdown={false}/>
                     }}
                 >
                     Click to generate new words
